@@ -1,7 +1,6 @@
 package com.pig1et.easypoidemo.vo;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
-import cn.afterturn.easypoi.handler.inter.IExcelDataModel;
 import cn.afterturn.easypoi.handler.inter.IExcelModel;
 import lombok.Data;
 
@@ -9,15 +8,14 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 此类实现IExcelModel接口，启用数据校验时，将返回全部解析后的数据
- * 实现IExcelDataModel接口，启用数据校验并出错时，返回错误行号
+ * 此类不实现IExcelModel接口，启用校验数据时，将只返回校验通过的数据
  * @Author pig1otO
  */
 @Data
-public class ExcelImportVO implements Serializable, IExcelModel, IExcelDataModel {
+public class ExcelImportVO2 implements Serializable {
 
     /**
-     * name属性标识excel的列明，isImportField标识是否为必填项，orderNum列排序,importFormat转换时间类型的格式
+     * name属性标识excel的列明，isImportField标识是否为必填项，orderNum列排序
      */
     @Excel(name = "房源名称（房源维护中的名称）*")
     @NotNull(message = "房源名称不能为空！")
@@ -38,10 +36,10 @@ public class ExcelImportVO implements Serializable, IExcelModel, IExcelDataModel
     @Excel(name = "数量（库存总数）*", isImportField = "true", orderNum = "5")
     private String column6;
 
-    @Excel(name = "起始时间*", isImportField = "true", orderNum = "6", importFormat = "yyyy/MM/dd")
+    @Excel(name = "起始时间*", isImportField = "true", orderNum = "6", importFormat = "yyyy-MM-dd")
     private String column7;
 
-    @Excel(name = "结束时间*", isImportField = "true", orderNum = "7", importFormat = "yyyy/MM/dd")
+    @Excel(name = "结束时间*", isImportField = "true", orderNum = "7", importFormat = "yyyy-MM-dd")
     private String column8;
 
     @Excel(name = "销售价*", isImportField = "true", orderNum = "8")
@@ -71,29 +69,4 @@ public class ExcelImportVO implements Serializable, IExcelModel, IExcelDataModel
     @Excel(name = "保留房数*", isImportField = "true", orderNum = "16")
     private String column17;
 
-    /**
-     * 错误信息，必须为errorMsg
-     */
-    private String errorMsg;
-
-    @Override
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    @Override
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
-
-    private int rowNum;
-    @Override
-    public int getRowNum() {
-        return rowNum;
-    }
-
-    @Override
-    public void setRowNum(int rowNum) {
-        this.rowNum = rowNum;
-    }
 }
